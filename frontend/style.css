@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; background: #f7f7f7; color: #222; }
+.container { max-width: 900px; margin: 24px auto; padding: 16px; background: #fff; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.product { border: 1px solid #eee; padding: 12px; border-radius: 6px; background: #fafafa; }
+.product button { margin-top: 8px; }
+.cart-item { border-bottom: 1px solid #eee; padding: 8px 0; }
