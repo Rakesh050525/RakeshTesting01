@@ -8,8 +8,13 @@ async function fetchCart() {
   return res.json();
 }
 
-async function addToCart(id) {
+async function addToCart(id, cardEl) {
   await fetch('/api/cart', { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ id, quantity: 1 }) });
+  // simple animation on the card
+  if (cardEl) {
+    cardEl.classList.add('added');
+    setTimeout(() => cardEl.classList.remove('added'), 700);
+  }
   await renderCart();
 }
 
@@ -32,14 +37,38 @@ async function renderProducts() {
   products.forEach(p => {
     const div = document.createElement('div');
     div.className = 'product';
-    div.innerHTML = `<strong>${p.name}</strong><div>$${p.price.toFixed(2)}</div>`;
+    div.innerHTML = `<strong>${p.name}</strong><div class="price">$${p.price.toFixed(2)}</div>`;
     const btn = document.createElement('button');
     btn.textContent = 'Add to cart';
-    btn.onclick = () => addToCart(p.id);
+    btn.onclick = () => addToCart(p.id, div);
     div.appendChild(btn);
     el.appendChild(div);
   });
 }
+
+// Sorting UI
+document.querySelectorAll('input[name="sort"]').forEach(r => {
+  r.addEventListener('change', async () => {
+    const val = document.querySelector('input[name="sort"]:checked').value;
+    const products = await fetchProducts();
+    let sorted = products.slice();
+    if (val === 'low') sorted.sort((a,b)=>a.price-b.price);
+    if (val === 'high') sorted.sort((a,b)=>b.price-a.price);
+    // re-render with sorted order
+    const el = document.getElementById('products');
+    el.innerHTML = '';
+    sorted.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `<strong>${p.name}</strong><div class="price">$${p.price.toFixed(2)}</div>`;
+      const btn = document.createElement('button');
+      btn.textContent = 'Add to cart';
+      btn.onclick = () => addToCart(p.id, div);
+      div.appendChild(btn);
+      el.appendChild(div);
+    });
+  });
+});
 
 async function renderCart() {
   const data = await fetchCart();

@@ -5,15 +5,19 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Serve static frontend
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+// Serve static frontend from the sibling `../frontend` folder.
+// This keeps a consistent layout inside the container: `/app/backend` and `/app/frontend`.
+const frontendPath = path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendPath));
 
 // Sample products
 const products = [
-  { id: 1, name: 'T-shirt', price: 19.99 },
-  { id: 2, name: 'Coffee Mug', price: 9.99 },
-  { id: 3, name: 'Notebook', price: 6.5 },
-  { id: 4, name: 'Sticker Pack', price: 3.0 }
+  { id: 1, name: 'T-shirt', price: 19.99, category: 'Clothing' },
+  { id: 2, name: 'Coffee Mug', price: 9.99, category: 'Home' },
+  { id: 3, name: 'Notebook', price: 6.5, category: 'Stationery' },
+  { id: 4, name: 'Sticker Pack', price: 3.0, category: 'Accessories' },
+  { id: 5, name: 'Hoodie', price: 39.99, category: 'Clothing' },
+  { id: 6, name: 'Desk Lamp', price: 24.5, category: 'Home' }
 ];
 
 // In-memory cart: { productId: quantity }
@@ -54,7 +58,7 @@ app.post('/api/checkout', (req, res) => {
 
 // Fallback to index.html for SPA
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
