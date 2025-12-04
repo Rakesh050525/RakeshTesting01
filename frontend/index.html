@@ -8,11 +8,29 @@
   </head>
   <body>
     <div class="container">
-      <h1>Shopping Cart Demo</h1>
-      <div id="products" class="products"></div>
-      <h2>Your Cart</h2>
-      <div id="cart" class="cart"></div>
-      <button id="checkout">Checkout</button>
+      <header class="hero">
+        <h1 class="logo">ShopSpark</h1>
+        <p class="tag">A colorful shopping cart demo with animations</p>
+        <div class="controls">
+          <label>Sort:</label>
+          <label class="radio"><input type="radio" name="sort" value="default" checked> Default</label>
+          <label class="radio"><input type="radio" name="sort" value="low"> Price: Low → High</label>
+          <label class="radio"><input type="radio" name="sort" value="high"> Price: High → Low</label>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <h2>Products</h2>
+          <div id="products" class="products"></div>
+        </section>
+
+        <aside>
+          <h2>Your Cart</h2>
+          <div id="cart" class="cart"></div>
+          <button id="checkout" class="checkout">Checkout</button>
+        </aside>
+      </main>
     </div>
     <script src="app.js"></script>
   </body>
