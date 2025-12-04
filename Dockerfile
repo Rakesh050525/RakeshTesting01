@@ -5,7 +5,7 @@ WORKDIR /build
 COPY frontend/package.json frontend/package-lock.json* ./frontend/
 COPY frontend ./frontend
 WORKDIR /build/frontend
-RUN npm ci --silent && npm run build
+RUN npm install --silent && npm run build
 
 FROM node:20-alpine
 WORKDIR /app
